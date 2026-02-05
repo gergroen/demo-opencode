@@ -30,3 +30,7 @@ Een Blazor WebAssembly Progressive Web App die waarschuwt wanneer de buitentempe
 - .NET 10 Blazor WebAssembly
 - Open-Meteo API
 - HTML5 Geolocation & Notifications API
+
+## Hosted Github Pages
+
+https://gergroen.github.io/demo-opencode/
