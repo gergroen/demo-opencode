@@ -1,0 +1,20 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# User-specific files
+*.user
+*.suo
+*.userprefs
+
+# Visual Studio Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Blazor WASM
+wwwroot/_framework/

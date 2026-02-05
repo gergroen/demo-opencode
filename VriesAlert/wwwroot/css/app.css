@@ -1,0 +1,201 @@
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow: hidden; /* Prevent scrolling on main container */
+    background: var(--bg-neutral);
+}
+
+/* Default Blazor styles kept for error UI */
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+/* Custom App Styles */
+:root {
+    --bg-safe: linear-gradient(135deg, #a8e063 0%, #56ab2f 100%);
+    --bg-freezing: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+    --bg-neutral: linear-gradient(135deg, #667db6 0%, #0082c8 100%, #0082c8 100%, #667db6 100%);
+}
+
+#app {
+    height: 100%;
+}
+
+.weather-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 10vh;
+    padding-bottom: 2rem;
+    color: white;
+    transition: background 1s ease;
+    background: transparent; /* Use body background or parent */
+}
+
+.weather-container.safe {
+    background: var(--bg-safe);
+}
+
+.weather-container.freezing {
+    background: var(--bg-freezing);
+}
+
+.main-display {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+}
+
+.display-1 {
+    font-size: 5rem;
+    font-weight: 700;
+}
+
+.controls-container {
+    width: 100%;
+    max-width: 500px;
+    padding: 1rem;
+    /* make room for bottom nav */
+    padding-bottom: 80px; 
+}
+
+.logs-card {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    color: #333;
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
+.bounce-in {
+    animation: bounceIn 0.8s;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+/* Navigation & Layout */
+.app-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+.content-area {
+    flex: 1;
+    overflow-y: auto;
+    position: relative;
+    padding-bottom: 60px; /* Space for bottom nav */
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #666;
+    font-size: 0.8rem;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s;
+}
+
+.nav-item.active {
+    color: #007bff;
+    background: rgba(0, 123, 255, 0.05);
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+}
+
+/* Mobile optimizations */
+@media (max-width: 576px) {
+    .display-1 {
+        font-size: 4rem;
+    }
+}
+
+/* Loading Spinner from Default Template */
+.loading-progress {
+    position: absolute;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    inset: 20vh 0 auto 0;
+    margin: 0 auto 0 auto;
+}
+
+.loading-progress circle {
+    fill: none;
+    stroke: #e0e0e0;
+    stroke-width: 0.6rem;
+    transform-origin: 50% 50%;
+    transform: rotate(-90deg);
+}
+
+.loading-progress circle:last-child {
+    stroke: #1b6ec2;
+    stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+    transition: stroke-dasharray 0.05s ease-in-out;
+}
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+.loading-progress-text:after {
+    content: var(--blazor-load-percentage-text, "Loading");
+}

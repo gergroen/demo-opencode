@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VriesAlert", "VriesAlert\VriesAlert.csproj", "{907696B7-85A7-6C36-017A-DA287B004531}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{907696B7-85A7-6C36-017A-DA287B004531}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{907696B7-85A7-6C36-017A-DA287B004531}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{907696B7-85A7-6C36-017A-DA287B004531}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{907696B7-85A7-6C36-017A-DA287B004531}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A1253AF-A1FC-4BFA-89F1-B0160B8D2949}
+	EndGlobalSection
+EndGlobal

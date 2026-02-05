@@ -1,0 +1,94 @@
+@page "/world"
+@using VriesAlert.Models
+@using VriesAlert.Services
+@inject WeatherService WeatherService
+
+<PageTitle>VriesAlert - Wereldwijd</PageTitle>
+
+<div class="container pb-5" style="padding-top: 10vh; color: white;">
+    <h2 class="fw-bold mb-4 text-center">Wereldwijde Vrieskou 🥶</h2>
+
+    @if (IsLoading)
+    {
+        <div class="text-center">
+            <div class="spinner-border text-light" role="status">
+                <span class="visually-hidden">Laden...</span>
+            </div>
+            <p class="mt-2">Gegevens ophalen van @CapitalData.List.Count hoofdsteden...</p>
+        </div>
+    }
+    else if (ColdCities.Any())
+    {
+        <div class="row g-3">
+            @foreach (var city in ColdCities)
+            {
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="card bg-white bg-opacity-10 border-0 text-white shadow-sm h-100">
+                        <div class="card-body text-center">
+                            <div class="display-6 mb-2">@city.Icon</div>
+                            <h5 class="card-title text-truncate mb-0">@city.City.Name</h5>
+                            <small class="text-white-50 d-block mb-2">@city.City.CountryName</small>
+                            <p class="display-6 fw-bold mb-0">@city.Temp.ToString("0.0")°C</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center mt-5">
+            <p class="lead">Het is momenteel nergens op onze lijst onder nul! 🌍☀️</p>
+            <p class="small opacity-75">(Of er is iets misgegaan met de data)</p>
+        </div>
+    }
+    
+    <div class="text-center mt-4 mb-5">
+         <button class="btn btn-outline-light btn-sm opacity-50" @onclick="LoadData">Verversen</button>
+    </div>
+</div>
+
+@code {
+    private bool IsLoading = false;
+    private List<(City City, double Temp, string Icon)> ColdCities = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    private async Task LoadData()
+    {
+        IsLoading = true;
+        ColdCities.Clear();
+        
+        try
+        {
+            var cities = CapitalData.List;
+            var weatherData = await WeatherService.GetWeatherData(cities);
+
+            if (weatherData.Count == cities.Count)
+            {
+                for (int i = 0; i < cities.Count; i++)
+                {
+                    if (weatherData[i].Temp.HasValue && weatherData[i].Temp < 0)
+                    {
+                        var icon = WeatherIconHelper.GetIcon(weatherData[i].Code);
+                        ColdCities.Add((cities[i], weatherData[i].Temp!.Value, icon));
+                    }
+                }
+                
+                // Sort by coldest first
+                ColdCities = ColdCities.OrderBy(x => x.Temp).ToList();
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        finally
+        {
+            IsLoading = false;
+        }
+    }
+}
